@@ -1,0 +1,16 @@
+### -> aws cli
+  install from aws website
+
+### -> aws configure
+  aws configure
+
+### -> serverless
+  npm install -g serverless
+
+### -> serverless project
+  serverless
+    - select AWS - Nodejs - HTTP API
+
+### -> middleware
+  npm install --save @middy/core 
+  npm install @middy/http-json-body-parser

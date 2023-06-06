@@ -1,0 +1,50 @@
+service: aws-lambda-crud-node
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: 
+        - arn:aws:dynamodb:us-east-1:677546066292:table/TaskTable
+
+functions:
+  chatgpt:
+    handler: src/chatgpt.chatgpt
+    events:
+      - http:
+          path: /chatgpt
+          method: post
+          cors: true
+  prueba:
+    handler: functions/testing/index.handler
+    events:
+      - http:
+          path: /prueba
+          method: any
+          cors: true
+          private: false
+      - http:
+          path: /prueba/{proxy+}
+          method: any
+          cors: true
+          private: false
+
+
+resources:
+  Resources:
+    TaskTable:
+      Type: AWS::DynamoDB::Table
+      Properties: 
+        TableName: TaskTable
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
